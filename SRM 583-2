@@ -1,0 +1,147 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <cmath>
+#include <cstdlib>
+
+using namespace std;
+
+
+
+class IDNumberVerification
+{
+public:
+    string verify(string id, vector <string> regionCodes)
+    {
+        string region = id.substr(0, 6);
+        string bday = id.substr(6, 8);
+        string sex =id.substr(14, 3);
+        string checksum = id.substr(17, 1);
+
+        long sum = 0;
+        int result = validSex(region);
+        if(validBday(bday) && validRegion(regionCodes, region) && result)
+        {
+            for(unsigned int i = 0; i < id.size(); i++)
+            {
+                sum += atoi(id.substr(i, 1).c_str())*pow(2, id.size()-i);
+            }
+            sum %= 11;
+            if(((sum == 10) && (id.at(id.size()) == 'X')) || (sum == atoi(id.substr(id.size()-1, 1).c_str())))
+            {
+                if(result == 1)
+                {
+                    return "Male";
+                }
+                else if(result == 2)
+                {
+                    return "Female";
+                }
+            }
+        }
+        return "Invalid";
+    }
+
+private:
+    bool validBday(string bday)
+    {
+        string year = bday.substr(0, 4);
+        string month= bday.substr(4, 2);
+        string day = bday.substr(6, 2);
+
+        vector<string> ex = {"09", "04", "06", "11"};
+
+        if((year < "1900") || (year > "2011") )
+        {
+            return false;
+        }
+    if(month < "12")
+        {
+        if(isLeapYear(year))
+        {
+            if(month == "02")
+            {
+                if(day > "29")
+                {
+                    return false;
+                }
+            }
+        }
+
+        if(month == "02")
+        {
+            if(day > "28")
+                return false;
+        }
+
+        if(find(ex.begin(), ex.end(), month) != ex.end())
+        {
+            if(day > "30")
+                return false;
+        }
+        }
+
+        if(day > "31")
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    bool validRegion(vector<string> codes, string region)
+    {
+        vector<string>::iterator pos = find(codes.begin(), codes.end(), region);
+
+        if(pos != codes.end())
+        {
+            return true;
+        }
+        return false;
+    }
+
+    int validSex(string sex)
+    {
+        if(sex == "000")
+        {
+            return 0;
+        }
+    int value = atoi(sex.c_str());
+
+    if(value & 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 2;
+    }
+
+
+    }
+
+    bool isLeapYear(string y)
+    {
+        int year = atoi(y.c_str());
+
+        if((year%4 == 0) && (year%100 != 0))
+        {
+            return true;
+        }
+        else if(year%400 == 0)
+        {
+            return true;
+        }
+
+        return false;
+
+    }
+
+};
+
+int main()
+{
+
+    return 0;
+}
