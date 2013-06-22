@@ -1,3 +1,43 @@
 #include <iostream>
+#include <string>
+#include <algorithm>
 
 using namespace std;
+
+class SwappingDigits
+{
+public:
+    string minDigit(string num)
+    {
+        sort(num.begin(), num.end());
+        char tmp;
+
+
+
+            if(num.at(0) == '0')
+            {
+                for(int i = 0; i < num.size(); i++)
+                {
+                    if(num.at(i) != '0')
+                    {
+                        tmp = num.at(i);
+                        num.at(i) = num.at(0);
+                        num.at(0) = tmp;
+                        break;
+                    }
+                }
+            }
+
+
+        return num;
+}
+    };
+
+int main()
+{
+    SwappingDigits d;
+
+    cout << d.minDigit(("43500005"));
+
+    return 0;
+}
