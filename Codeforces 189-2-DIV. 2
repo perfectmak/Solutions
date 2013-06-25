@@ -1,0 +1,77 @@
+/*
+* It should be noted that this particular solution is yet to be test.
+* Test if you are interested and modify accordingly
+*/
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+bool isYes = false;
+bool canMove(vector<pair<int, int> > paths, pair<int, int> start, pair<int, int> stop)
+{
+    int i = 0;
+    int j = 0;
+
+    if(start == stop)
+    {
+        return true;
+    }
+
+    paths.erase(find(paths.begin(), paths.end(), start));
+
+    while(i != paths.size())
+    {
+        if(((paths[i].first < start.first) && (start.first < paths[i].second)) || ((paths[i].first < start.second) && (start.second < paths[i].second)))
+        {
+            return canMove(paths, paths[i], stop);
+        }
+        i++;
+    }
+    return false;
+}
+
+int main()
+{
+    int n;
+    int a, x, y;
+    vector<pair<int, int> > cords, store;
+
+    cin >> n;
+
+    while(n--)
+    {
+        isYes = false;
+        cin >>a >> x >> y;
+        if(a == 1)
+        {
+            store.push_back(make_pair(x, y));
+            cords.push_back(make_pair(x, y));
+        }
+        else
+        {
+            if((y > cords.size())||(x > cords.size()))
+            {
+                cout << "NO\n";
+                continue;
+            }
+            auto start = store[min(x-1, y-1)];
+            auto stop = store[max(x-1,y-1)];
+
+            sort(cords.begin(), cords.end());
+
+            if(canMove(cords, start, stop))
+            {
+                cout << "YES\n";
+            }
+            else
+            {
+                cout << "NO\n";
+            }
+        }
+    }
+    return 0;
+}
