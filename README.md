@@ -7,3 +7,5 @@ LEGEND
 ======
 
 SRM - Topcoders Single Round Match
+
+Codeforces - Codeforces contest
