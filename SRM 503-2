@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+class ToastXToast
+{
+public:
+    int bake(vector <int> undertoasted, vector <int> overtoasted)
+    {
+        int counter = 0;
+        
+        sort(undertoasted.begin(), undertoasted.end());
+        sort(overtoasted.begin(), overtoasted.end());
+        
+        vector<int>::iterator u = undertoasted.begin();
+        vector<int>::iterator o = overtoasted.begin();
+        
+        bool under = false;
+        bool isStarting = true;
+        
+        
+        while(u != undertoasted.end() && o != overtoasted.end())
+        {
+            if(*u == *o)
+            {
+                u++;
+                o++;
+            }
+            else if(*u < *o)
+            {
+                u++;
+                
+                if(!isStarting)
+                {
+                    
+                }
+                
+                if(!under)
+                {
+                    counter++;
+                }                
+                under = true;
+            }            
+            else if(*u > *o)
+            {
+                o++;
+                under = false;             
+            }
+            
+            isStarting = false;
+        }
+        
+        return (counter == 0) ? -1 : counter;
+    }
+};
+
+/*
+ * 
+ */
+int main(int argc, char** argv) 
+{
+    ToastXToast toast;
+    
+    cout << toast.bake({2,4}, {5,6,3}) << endl;
+    
+    return 0;
+}
+
