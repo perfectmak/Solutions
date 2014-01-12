@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+class FoxAndWord
+{
+public:
+    int howManyPairs(vector <string> words)
+    {
+        int counter = 0;
+        
+        for(int i = 0; i < words.size(); i++)
+        {
+            string first = words.at(i);
+            int len = first.size();
+            for(int j = i+1; j < words.size(); j++)
+            {
+                string second = words.at(j);
+                if(len != second.size())
+                    continue;
+                
+                int middle = -1;
+                
+                for(int a = 0; a < len-1; a++)
+                {
+                    if(first.substr(0, a+1) == second.substr(len-a-1, a+1))
+                    {
+                        middle = a;
+                    }
+                }
+                
+                if(middle == -1)
+                    continue;
+      
+                if(first.substr(middle+1, len-middle) == second.substr(0, len-middle-1))
+                {
+                    counter++;
+                }                
+            }
+        }
+        
+        return counter;
+    }
+};
+
+/*
+ * 
+ */
+int main(int argc, char** argv) 
+{
+    FoxAndWord fw;
+    
+    cout << fw.howManyPairs({"top","coder"}) << endl;
+    
+    return 0;
+}
+
