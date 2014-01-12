@@ -1,7 +1,7 @@
 Solutions
 =========
 
-Algorithm Challenge Solutions
+Algorithm Challenge Solutions all implemented in c++
 
 LEGEND
 ======
